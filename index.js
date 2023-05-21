@@ -19,6 +19,9 @@ connectDB();
 // We are using this for the express-rate-limit middleware
 // See: https://github.com/nfriedly/express-rate-limit
 // app.enable('trust proxy');
+app.use(cors({
+  origin: ['*']
+}));
 app.set('trust proxy', 1);
 app.use((err, req, res, next) => {
   if (res.headersSent) return next(err);
@@ -26,7 +29,6 @@ app.use((err, req, res, next) => {
 });
 app.use(express.json());
 app.use(helmet());
-app.use(cors());
 
 //root route
 app.get('/', (req, res) => {
