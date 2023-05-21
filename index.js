@@ -4,6 +4,11 @@ const app = express();
 const cors = require('cors');
 const helmet = require('helmet');
 
+app.use(cors({
+  origin: ['*']
+}));
+
+
 const connectDB = require('./config/db');
 const productRoutes = require('./routes/productRoutes');
 const userRoutes = require('./routes/userRoutes');
@@ -19,9 +24,7 @@ connectDB();
 // We are using this for the express-rate-limit middleware
 // See: https://github.com/nfriedly/express-rate-limit
 // app.enable('trust proxy');
-app.use(cors({
-  origin: ['*']
-}));
+
 app.set('trust proxy', 1);
 app.use((err, req, res, next) => {
   if (res.headersSent) return next(err);
