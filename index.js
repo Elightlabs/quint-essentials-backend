@@ -3,8 +3,8 @@ require('dotenv').config();
 const app = express();
 const cors = require('cors');
 app.use(cors({
-  origin: ["http://localhost:3000", "http://localhost:8080"]
-  // origin: ['https://quint-essentials-store.vercel.app',"https://www.quint-essentials-store.vercel.app" ,"https://quint-essentials-admin.vercel.app", "https://www.quint-essentials-admin.vercel.app"]
+  // origin: ["http://localhost:3000", "http://localhost:8080"]
+  origin: ['https://quint-essentials-store.vercel.app',"https://www.quint-essentials-store.vercel.app" ,"https://quint-essentials-admin.vercel.app", "https://www.quint-essentials-admin.vercel.app"]
 }));
 const helmet = require('helmet');
 
