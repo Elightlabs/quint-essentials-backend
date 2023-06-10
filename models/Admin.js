@@ -23,7 +23,6 @@ const adminSchema = new mongoose.Schema(
       type: String,
       required: false,
     },
-
     email: {
       type: String,
       required: true,
@@ -36,17 +35,24 @@ const adminSchema = new mongoose.Schema(
     },
     password: {
       type: String,
-      required: false,
-      default: bcrypt.hashSync('12345678'),
+      required: true,
     },
     role: {
       type: String,
-      required: false,
+      required: true,
     },
     joiningData: {
-      type: Date,
+      type: String,
       required: false,
     },
+    order: {
+      type: String
+    },
+    status: {
+      type: String,
+      required: true,
+      default: "Idle"
+    }
   },
   {
     timestamps: true,

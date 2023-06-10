@@ -20,11 +20,11 @@ const productSchema = new mongoose.Schema(
     },
     parent: {
       type: String,
-      required: true,
+      required: false,
     },
     children: {
       type: String,
-      required: true,
+      required: false,
     },
     image: {
       type: String,
@@ -48,23 +48,20 @@ const productSchema = new mongoose.Schema(
       type: Number,
       required: true,
     },
-
     description: {
       type: String,
       required: true,
     },
     type: {
       type: String,
-      required: true,
+      required: false,
     },
     tag: [String],
-
     flashSale: {
       type: Boolean,
       required: false,
       default: false,
     },
-
     status: {
       type: String,
       default: 'Show',

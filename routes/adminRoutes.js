@@ -10,6 +10,7 @@ const {
   getStaffById,
   updateStaff,
   deleteStaff,
+  assignOrder,
 } = require('../controller/adminController');
 const { passwordVerificationLimit } = require('../config/others');
 
@@ -29,13 +30,16 @@ router.put('/reset-password', resetPassword);
 router.post('/add', addStaff);
 
 //get all staff
-router.post('/', getAllStaff);
+router.get('/', getAllStaff);
 
 //get a staff
 router.post('/:id', getStaffById);
 
 //update a staff
-router.put('/:id', updateStaff);
+router.patch('/:id', updateStaff);
+
+//assign order
+router.patch('/assign/:id', assignOrder);
 
 //delete a staff
 router.delete('/:id', deleteStaff);

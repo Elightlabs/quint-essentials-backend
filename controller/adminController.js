@@ -18,7 +18,7 @@ const registerAdmin = async (req, res) => {
         name: req.body.name,
         email: req.body.email,
         role: req.body.role,
-        password: bcrypt.hashSync(req.body.password),
+        password: await bcrypt.hash(req.body.password, 10),
       });
       const staff = await newStaff.save();
       const token = signInToken(staff);
@@ -41,7 +41,7 @@ const registerAdmin = async (req, res) => {
 const loginAdmin = async (req, res) => {
   try {
     const admin = await Admin.findOne({ email: req.body.email });
-    if (admin && bcrypt.compareSync(req.body.password, admin.password)) {
+    if (admin && bcrypt.compare(req.body.password, admin.password)) {
       const token = signInToken(admin);
       res.send({
         token,
@@ -120,7 +120,7 @@ const resetPassword = async (req, res) => {
 
 const addStaff = async (req, res) => {
   try {
-    const isAdded = await Admin.find({ email: req.body.data.email });
+    const isAdded = await Admin.findOne({ email: req.body.data.email });
     if (isAdded) {
       return res.status(500).send({
         message: 'This Email already Added!',
@@ -129,7 +129,7 @@ const addStaff = async (req, res) => {
       const newStaff = new Admin({
         name: req.body.data.name,
         email: req.body.data.email,
-        password: bcrypt.hashSync(req.body.data.password),
+        password: bcrypt.hashSync(req.body.data.password, 10),
         phone: req.body.data.phone,
         joiningDate: req.body.data.joiningDate,
         role: req.body.data.role,
@@ -176,10 +176,30 @@ const updateStaff = async (req, res) => {
       admin.phone = req.body.data.phone;
       admin.role = req.body.data.role;
       admin.joiningData = dayjs().utc().format(req.body.data.joiningDate);
-      admin.password = req.body.data.password
-        ? bcrypt.hashSync(req.body.data.password)
-        : admin.password;
+      admin.password = req.body.data.password ? admin.password :  bcrypt.hashSync(req.body.data.password);
       admin.image = req.body.data.image;
+      const updatedAdmin = await admin.save();
+      const token = signInToken(updatedAdmin);
+      res.send({
+        token,
+        _id: updatedAdmin._id,
+        name: updatedAdmin.name,
+        email: updatedAdmin.email,
+        role: updatedAdmin.role,
+        image: updatedAdmin.image,
+        joiningData: updatedAdmin.joiningData,
+      });
+    }
+  } catch (err) {
+    res.status(404).send(err.message);
+  }
+};
+
+const assignOrder = async (req, res) => {
+  try {
+    const admin = await Admin.findById(req.params.id);
+    if (admin) {
+      admin.order = req.body.order;
       const updatedAdmin = await admin.save();
       const token = signInToken(updatedAdmin);
       res.send({
@@ -221,4 +241,5 @@ module.exports = {
   getStaffById,
   updateStaff,
   deleteStaff,
+  assignOrder
 };
