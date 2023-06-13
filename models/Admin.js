@@ -46,7 +46,8 @@ const adminSchema = new mongoose.Schema(
       required: false,
     },
     order: {
-      type: String
+      type: String,
+      default: "",
     },
     status: {
       type: String,

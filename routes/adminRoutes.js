@@ -11,6 +11,7 @@ const {
   updateStaff,
   deleteStaff,
   assignOrder,
+  deliverOrder,
 } = require('../controller/adminController');
 const { passwordVerificationLimit } = require('../config/others');
 
@@ -40,6 +41,8 @@ router.patch('/:id', updateStaff);
 
 //assign order
 router.patch('/assign/:id', assignOrder);
+
+router.patch('/deliver/:id', deliverOrder);
 
 //delete a staff
 router.delete('/:id', deleteStaff);

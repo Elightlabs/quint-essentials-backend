@@ -200,6 +200,30 @@ const assignOrder = async (req, res) => {
     const admin = await Admin.findById(req.params.id);
     if (admin) {
       admin.order = req.body.order;
+      admin.status = "busy"
+      const updatedAdmin = await admin.save();
+      const token = signInToken(updatedAdmin);
+      res.send({
+        token,
+        _id: updatedAdmin._id,
+        name: updatedAdmin.name,
+        email: updatedAdmin.email,
+        role: updatedAdmin.role,
+        image: updatedAdmin.image,
+        joiningData: updatedAdmin.joiningData,
+      });
+    }
+  } catch (err) {
+    res.status(404).send(err.message);
+  }
+};
+
+const deliverOrder = async (req, res) => {
+  try {
+    const admin = await Admin.findById(req.params.id);
+    if (admin) {
+      admin.order = "";
+      admin.status = "Idle";
       const updatedAdmin = await admin.save();
       const token = signInToken(updatedAdmin);
       res.send({
@@ -241,5 +265,6 @@ module.exports = {
   getStaffById,
   updateStaff,
   deleteStaff,
-  assignOrder
+  assignOrder,
+  deliverOrder
 };
