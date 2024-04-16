@@ -1,6 +1,6 @@
-const Order = require('../models/Order');
-const { handleProductQuantity } = require('../config/others');
-const { sendEmail } = require('../config/auth');
+const Order = require("../models/Order");
+const { handleProductQuantity } = require("../config/others");
+const { sendEmail } = require("../config/auth");
 
 const addOrder = async (req, res) => {
   try {
@@ -8,13 +8,13 @@ const addOrder = async (req, res) => {
       ...req.body,
       user: req.user._id,
     });
-    
+
     const order = await newOrder.save();
     res.status(201).send(order);
     const body = {
       from: process.env.EMAIL_USER,
       to: `${req.body.email}`,
-      subject: 'Order Placed',
+      subject: "Order Placed",
       html: `<h2>Hello ${req.body.email}</h2>
       <p>Your Order has been successfully placed in <strong>Quint Essentials</strong></p>
 
@@ -27,12 +27,27 @@ const addOrder = async (req, res) => {
              `,
     };
 
-    const message = 'Please check your email for Order Confirmation!';
+    const message = "Please check your email for Order Confirmation!";
     sendEmail(body, res, message);
     handleProductQuantity(order.cart);
   } catch (err) {
     res.status(500).send({
       message: err.message,
+    });
+  }
+};
+
+const updateOrder = async (req, res) => {
+  try {
+    const order = await Order.findById(req.body._id);
+    if (order) {
+      order.payment = req.body.payment;
+      await order.save();
+      res.send(order);
+    }
+  } catch (err) {
+    res.status(404).send({
+      message: "Your order is not valid!",
     });
   }
 };
@@ -63,4 +78,5 @@ module.exports = {
   addOrder,
   getOrderById,
   getOrderByUser,
+  updateOrder,
 };
