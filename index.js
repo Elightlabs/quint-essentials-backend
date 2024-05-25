@@ -4,13 +4,13 @@ const app = express();
 const cors = require("cors");
 app.use(
   cors({
-    origin: [
-      "http://localhost:3000",
-      "http://localhost:8080",
-      "https://fruit-seller-1396co4h7-udurgesh6s-projects.vercel.app/",
-      "https://fruit-seller.vercel.app",
-    ],
-    // origin: ['https://quint-essentials-store.vercel.app',"https://www.quint-essentials-store.vercel.app" ,"https://quint-essentials-admin.vercel.app", "https://www.quint-essentials-admin.vercel.app", "https://www.quintessentials.in", "http://localhost:8080", "http://localhost:3000", "https://quint-essentials-delivery.vercel.app"]
+    // origin: [
+    //   "http://localhost:3000",
+    //   "http://localhost:8080",
+    //   "https://fruit-seller-1396co4h7-udurgesh6s-projects.vercel.app/",
+    //   "https://fruit-seller.vercel.app",
+    // ],
+     origin: ['https://quint-essentials-store.vercel.app',"https://www.quint-essentials-store.vercel.app" ,"https://quint-essentials-admin.vercel.app", "https://www.quint-essentials-admin.vercel.app", "https://www.quintessentials.in", "http://localhost:8080", "http://localhost:3000", "https://quint-essentials-delivery.vercel.app"]
   })
 );
 const helmet = require("helmet");
