@@ -55,7 +55,6 @@ const orderSchema = new mongoose.Schema(
       required: true,
       default: 0,
     },
-
     total: {
       type: Number,
       required: true,
@@ -74,8 +73,10 @@ const orderSchema = new mongoose.Schema(
     },
     status: {
       type: String,
-      enum: ['Pending', 'Processing', 'Delivered'],
     },
+    returnReason: {
+      type: String
+    }
   },
   {
     timestamps: true,
